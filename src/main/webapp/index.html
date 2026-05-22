@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Gradle Webapp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        button, a.btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover, a.btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.3);
+        }
+        
+        .success {
+            background: #27ae60;
+        }
+        
+        .success:hover {
+            background: #229954;
+        }
+        
+        .info {
+            background: #3498db;
+        }
+        
+        .info:hover {
+            background: #2980b9;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+        
+        #output {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #333;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            color: #667eea;
+        }
+        
+        .loading.show {
+            display: block;
+        }
+        
+        .error {
+            color: #e74c3c;
+            background: #fadbd8;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .success-msg {
+            color: #27ae60;
+            background: #d5f4e6;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .tech-stack {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        
+        .tech-stack ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .tech-stack li {
+            padding: 5px 0;
+            color: #555;
+        }
+        
+        .tech-stack li:before {
+            content: "✓ ";
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Java Gradle Webapp</h1>
+        <p class="subtitle">A demonstration of Java servlets, REST APIs, and Gradle build automation</p>
+        
+        <!-- Basic Servlet Section -->
+        <div class="section">
+            <h2>Basic Servlet Test</h2>
+            <p>Test the basic Hello servlet:</p>
+            <div class="button-group">
+                <button class="btn info" onclick="testHelloServlet()">Call Hello Servlet</button>
+            </div>
+            <div id="helloOutput"></div>
+        </div>
+        
+        <!-- User API Section -->
+        <div class="section">
+            <h2>User Management API</h2>
+            
+            <div class="form-group">
+                <label>Get All Users:</label>
+                <div class="button-group">
+                    <button class="btn info" onclick="getAllUsers()">Fetch All Users</button>
+                </div>
+                <div id="usersOutput"></div>
+            </div>
+            
+            <div class="form-group">
+                <label>Get User by ID:</label>
+                <input type="text" id="userId" placeholder="Enter User ID (1, 2, or 3)" />
+                <div class="button-group" style="margin-top: 10px;">
+                    <button class="btn info" onclick="getUserById()">Get User</button>
+                </div>
+                <div id="singleUserOutput"></div>
+            </div>
+            
+            <div class="form-group">
+                <label>Create New User:</label>
+                <input type="text" id="userName" placeholder="Full Name" />
+                <input type="email" id="userEmail" placeholder="Email" style="margin-top: 10px;" />
+                <input type="text" id="userCity" placeholder="City" style="margin-top: 10px;" />
+                <div class="button-group" style="margin-top: 10px;">
+                    <button class="btn success" onclick="createUser()">Create User</button>
+                </div>
+                <div id="createUserOutput"></div>
+            </div>
+        </div>
+        
+        <!-- Technology Stack -->
+        <div class="section">
+            <div class="tech-stack">
+                <h2 style="border: none; padding: 0;">Technology Stack</h2>
+                <ul>
+                    <li>Java 11</li>
+                    <li>Gradle 7.5.1 - Build Automation</li>
+                    <li>Apache Tomcat 9 - Servlet Container</li>
+                    <li>Servlet 4.0 API</li>
+                    <li>GSON - JSON Processing</li>
+                    <li>SLF4J - Logging Framework</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function testHelloServlet() {
+            showLoading('helloOutput');
+            fetch('/hello')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('helloOutput').innerHTML = '<div class="success-msg">✓ Hello Servlet called successfully!</div>';
+                    console.log('Hello Servlet Response:', data);
+                })
+                .catch(error => {
+                    document.getElementById('helloOutput').innerHTML = '<div class="error">✗ Error: ' + error + '</div>';
+                    console.error('Error:', error);
+                });
+        }
+        
+        function getAllUsers() {
+            showLoading('usersOutput');
+            fetch('/api/user?action=list')
+                .then(response => response.json())
+                .then(data => {
+                    let output = '<div class="success-msg">✓ Users fetched successfully!</div><div id="output">' + JSON.stringify(data, null, 2) + '</div>';
+                    document.getElementById('usersOutput').innerHTML = output;
+                })
+                .catch(error => {
+                    document.getElementById('usersOutput').innerHTML = '<div class="error">✗ Error: ' + error + '</div>';
+                    console.error('Error:', error);
+                });
+        }
+        
+        function getUserById() {
+            const id = document.getElementById('userId').value;
+            if (!id) {
+                document.getElementById('singleUserOutput').innerHTML = '<div class="error">✗ Please enter a User ID</div>';
+                return;
+            }
+            
+            showLoading('singleUserOutput');
+            fetch('/api/user?action=get&id=' + id)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.id) {
+                        let output = '<div class="success-msg">✓ User found!</div><div id="output">' + JSON.stringify(data, null, 2) + '</div>';
+                        document.getElementById('singleUserOutput').innerHTML = output;
+                    } else {
+                        document.getElementById('singleUserOutput').innerHTML = '<div class="error">✗ User not found</div>';
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('singleUserOutput').innerHTML = '<div class="error">✗ Error: ' + error + '</div>';
+                });
+        }
+        
+        function createUser() {
+            const name = document.getElementById('userName').value;
+            const email = document.getElementById('userEmail').value;
+            const city = document.getElementById('userCity').value;
+            
+            if (!name || !email || !city) {
+                document.getElementById('createUserOutput').innerHTML = '<div class="error">✗ All fields are required</div>';
+                return;
+            }
+            
+            showLoading('createUserOutput');
+            const params = new URLSearchParams();
+            params.append('name', name);
+            params.append('email', email);
+            params.append('city', city);
+            
+            fetch('/api/user', {
+                method: 'POST',
+                body: params
+            })
+            .then(response => response.json())
+            .then(data => {
+                let output = '<div class="success-msg">✓ User created successfully!</div><div id="output">' + JSON.stringify(data, null, 2) + '</div>';
+                document.getElementById('createUserOutput').innerHTML = output;
+                // Clear form
+                document.getElementById('userName').value = '';
+                document.getElementById('userEmail').value = '';
+                document.getElementById('userCity').value = '';
+            })
+            .catch(error => {
+                document.getElementById('createUserOutput').innerHTML = '<div class="error">✗ Error: ' + error + '</div>';
+            });
+        }
+        
+        function showLoading(elementId) {
+            document.getElementById(elementId).innerHTML = '<div class="loading show">⏳ Loading...</div>';
+        }
+    </script>
+</body>
+</html>

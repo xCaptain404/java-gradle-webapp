@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'org.gretty' version '3.0.7'
+}
+
+group = 'com.example'
+version = '1.0.0'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Servlet API
+    providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
+    
+    // JSP
+    providedCompile 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.1'
+    providedCompile 'javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api:1.2.1'
+    runtimeOnly 'org.apache.taglibs:taglibs-standard-impl:1.2.5'
+    
+    // Logging
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'org.slf4j:slf4j-simple:1.7.32'
+    
+    // JSON processing
+    implementation 'com.google.code.gson:gson:2.8.9'
+    
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '7.5.1'
+}
+
+war {
+    baseName = 'java-gradle-webapp'
+    version = '1.0.0'
+}
+
+gretty {
+    contextPath = '/'
+    servletContainer = 'tomcat9'
+}

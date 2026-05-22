@@ -1,0 +1,35 @@
+# Gradle
+.gradle/
+build/
+dist/
+*.jar
+*.zip
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.iml
+
+# Build outputs
+out/
+bin/
+classes/
+
+# Environment
+.env
+.env.local
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
+
+# WAR and EAR files
+*.war
+*.ear
